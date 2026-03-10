@@ -4,6 +4,10 @@ from typing import Optional, List, Dict
 
 app = FastAPI()
 
-@app.get("/")
+@app.get('/')
 def index():
-    return {"message": "First Fully Fledged API!"}
+    return {"how did you get here?"}
+
+@app.get("/about")
+def index():
+    return {"data": "First Fully Fledged API!"}
