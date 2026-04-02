@@ -10,4 +10,4 @@ def index():
 
 @app.get("/about")
 def index():
-    return {"data": "First Fully Fledged API!"}
+    return {"data": "list of things"}
