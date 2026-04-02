@@ -13,5 +13,5 @@ def show(blog_id):
     return {"data": blog_id}
 
 @app.get('/blog/{blog_id}/comments')
-def show(blog_id):
+def comments(blog_id):
     return {blog_id : {"data" : "comments"}}
