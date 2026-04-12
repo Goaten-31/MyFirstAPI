@@ -4,6 +4,11 @@ from typing import Optional, List, Dict
 
 app = FastAPI()
 
+class Item(BaseModel):
+    id: int
+    name: str
+    price: float
+
 @app.get('/')
 def index():
     return {"how did you get here?"}
@@ -11,6 +16,14 @@ def index():
 @app.get('/gateway')
 def gateway():
     return {"Uhm": "This is awkward"}
+
+@app.get('/reduction/{item.id}')
+def check(item : Item):
+    if item.id == 1:
+        return {item.name : {"old price": item.price, "new price" : item.price * 0.9}}
+    else:
+        return {0 : "null"}
+
 
 @app.get('/gateway/{gate_id}')
 def gateway_id(gate_id: int):
