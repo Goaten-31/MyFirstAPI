@@ -9,7 +9,10 @@ class Project(BaseModel):
     id: int
     name: str
     date_made: date
+    date_last_edit : date
     comments : Optional[str] = None
+    activity_status: str
+
 
 @app.get('/')
 def index():
@@ -31,19 +34,25 @@ def gateway_id(gate_id: int):
         case _:
             raise HTTPException(status_code=404, detail="Gateway not found, HTTP status code: 404")
 
+
 @app.get('/project/project_lib/{proj_id}')
 def check(project: Project):
     try:
         if project.id:
-            return {project.id : {"Project Name": project.name, "Date Created" : project.date_made}}
+            return {project.id : 
+                    {"Project Name": project.name, 
+                     "Date Created" : project.date_made}}
         else:
             return {0 : "null"}
+        
     except Exception as e:
         raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")
+
 
 @app.get('/projects/private')
 def private():
     return {"data" : "private project"}
+
 
 @app.get('/projects/{proj_id}')
 def show(proj_id : int):
@@ -61,9 +70,3 @@ def post_comment(proj_id : int, proj_comment : str):
     except:
         raise HTTPException(403, "Error 403: Forbidden")
     
-@app.get('/projects/{proj_id}')
-def comments(proj_id : int):
-    try:
-        return {proj_id : {"comments" : {"user" : ""}}}
-    except:
-        raise HTTPException(404, "Error 404, This content was not found")
