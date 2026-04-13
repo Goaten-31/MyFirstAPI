@@ -9,6 +9,7 @@ class Project(BaseModel):
     id: int
     name: str
     date_made: date
+    comments : Optional[str] = None
 
 @app.get('/')
 def index():
@@ -52,12 +53,6 @@ def show(proj_id : int):
     except Exception as e:
         raise HTTPException(status_code=404, detail=f"Content not found, HTTP status code: 404, detail : {e}")
     
-@app.get('/projects/{proj_id}/comments')
-def comments(proj_id : int):
-    try:
-        return {proj_id : {"comments" : {'user1' : 'comment1', 'user2' : 'comment2'}}}
-    except:
-        raise HTTPException(404, "Error 404, This content was not found")
 
 @app.post('/projects/{proj_id}/{proj_comment}')
 def post_comment(proj_id : int, proj_comment : str):
@@ -65,3 +60,10 @@ def post_comment(proj_id : int, proj_comment : str):
         return {proj_id : {"comments" : {"user" : proj_comment}}}
     except:
         raise HTTPException(403, "Error 403: Forbidden")
+    
+@app.get('/projects/{proj_id}')
+def comments(proj_id : int):
+    try:
+        return {proj_id : {"comments" : {"user" : ""}}}
+    except:
+        raise HTTPException(404, "Error 404, This content was not found")
