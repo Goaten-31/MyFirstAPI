@@ -1,13 +1,14 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional, List, Dict
+from datetime import date, datetime
 
 app = FastAPI()
 
-class Item(BaseModel):
+class Project(BaseModel):
     id: int
     name: str
-    price: float
+    date_made: date
 
 @app.get('/')
 def index():
@@ -16,14 +17,6 @@ def index():
 @app.get('/gateway')
 def gateway():
     return {"Uhm": "This is awkward"}
-
-@app.get('/reduction/{item.id}')
-def check(item : Item):
-    if item.id == 1:
-        return {item.name : {"old price": item.price, "new price" : item.price * 0.9}}
-    else:
-        return {0 : "null"}
-
 
 @app.get('/gateway/{gate_id}')
 def gateway_id(gate_id: int):
@@ -37,14 +30,38 @@ def gateway_id(gate_id: int):
         case _:
             raise HTTPException(status_code=404, detail="Gateway not found, HTTP status code: 404")
 
+@app.get('/project/project_lib/{proj_id}')
+def check(project: Project):
+    try:
+        if project.id:
+            return {project.id : {"Project Name": project.name, "Date Created" : project.date_made}}
+        else:
+            return {0 : "null"}
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")
+
 @app.get('/projects/private')
 def private():
     return {"data" : "private project"}
 
 @app.get('/projects/{proj_id}')
 def show(proj_id : int):
-    return {"data": proj_id}
-
+    try:
+        return {"data": proj_id}
+    
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=f"Content not found, HTTP status code: 404, detail : {e}")
+    
 @app.get('/projects/{proj_id}/comments')
 def comments(proj_id : int):
-    return {proj_id : {"comments" : {'user1' : 'comment1', 'user2' : 'comment2'}}}
+    try:
+        return {proj_id : {"comments" : {'user1' : 'comment1', 'user2' : 'comment2'}}}
+    except:
+        raise HTTPException(404, "Error 404, This content was not found")
+
+@app.post('/projects/{proj_id}/{proj_comment}')
+def post_comment(proj_id : int, proj_comment : str):
+    try:
+        return {proj_id : {"comments" : {"user" : proj_comment}}}
+    except:
+        raise HTTPException(403, "Error 403: Forbidden")
