@@ -21,6 +21,7 @@ This project's goal is to help me learn backend and full-stack development. I ch
 - It's lightweight and a good fit for small-scale web apps compared to frameworks such as Django.
 
 I'm new to software engineering and focusing on learning broadly applicable backend skills.
+Originally intended as a broad introduction to backend development, this project has evolved into a purpose-built API for my Electron-based project-tracking application.
 
 ## Getting started
 
