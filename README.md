@@ -11,11 +11,11 @@ This project is a prototype API for my personal portfolio website (see "firstWeb
 - Python 3.13
 - FastAPI
 - SQLAlchemy
-- JWT (e.g., PyJWT or python-jose)
+- JWT with PyJWT
 
 ## Goals
 
-This project is intended to help me learn backend and full-stack development. I chose FastAPI because:
+This project's goal is to help me learn backend and full-stack development. I chose FastAPI because:
 
 - It works well for deploying ML models via HTTP APIs.
 - It's modular, letting me pick libraries for authentication, authorization, and database access.
@@ -29,13 +29,13 @@ Prerequisites: Python 3.13 and Git.
 
 1. Create and activate a virtual environment
 
-	 - Windows (PowerShell):
-		 - `python -m venv venv`
-		 - `.\\venv\\Scripts\\Activate.ps1`
+- Windows (PowerShell):
+    - `python -m venv venv`
+    - `.\\venv\\Scripts\\Activate.ps1`
 
-	 - macOS / Linux:
-		 - `python3 -m venv venv`
-		 - `source venv/bin/activate`
+- macOS / Linux:
+	- `python3 -m venv venv`
+	- `source venv/bin/activate`
 
 2. Install dependencies
 
