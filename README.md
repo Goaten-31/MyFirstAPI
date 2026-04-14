@@ -10,8 +10,7 @@ This project is a prototype API for my personal portfolio website (see "firstWeb
 
 - Python 3.13
 - FastAPI
-- SQLAlchemy
-- JWT with PyJWT
+- PyTest
 
 ## Goals
 
