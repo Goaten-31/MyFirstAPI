@@ -1,24 +1,46 @@
 # My First API
 
-#### With this project, I aim to build a prototypal api for my personal portfolio website (Check my "firstWebPage")
+Prototypal API for a personal portfolio website.
 
-## Stack:
- ### - Interpreter: 
+## Overview
+
+This project is a prototype API for my personal portfolio website (see "firstWebPage").
+
+## Tech stack
+
 - Python 3.13
-### - Libraries/Frameworks:
 - FastAPI
-- SQL alchemy
-- JWT
+- SQLAlchemy
+- JWT (e.g., PyJWT or python-jose)
 
-## Goals:
-With this API, I plan to take my first step into the world of 
-backend/fullstack dev the choice of the FastAPI framework came for a few reasons:
+## Goals
 
-- The rising need for apis that are able to handle ML model deployment.
-- Its modularity, giving me the bare bones of an API and allowing me to choose which 
-libraries to handle authentication / authorization, SQL queries...
-- It's a better choice for small-scale web apps compared to frameworks such as django 
+This project is intended to help me learn backend and full-stack development. I chose FastAPI because:
 
+- It works well for deploying ML models via HTTP APIs.
+- It's modular, letting me pick libraries for authentication, authorization, and database access.
+- It's lightweight and a good fit for small-scale web apps compared to frameworks such as Django.
 
-Since I am a novice to the world of software engineering and development as
-a whole, I feel like learning skills with broad applications is very crucial for me
+I'm new to software engineering and focusing on learning broadly applicable backend skills.
+
+## Getting started
+
+Prerequisites: Python 3.13 and Git.
+
+1. Create and activate a virtual environment
+
+	 - Windows (PowerShell):
+		 - `python -m venv venv`
+		 - `.\\venv\\Scripts\\Activate.ps1`
+
+	 - macOS / Linux:
+		 - `python3 -m venv venv`
+		 - `source venv/bin/activate`
+
+2. Install dependencies
+
+- `pip install -r requirements.txt`
+
+3. Run the development server
+
+- `uvicorn main:app --reload`

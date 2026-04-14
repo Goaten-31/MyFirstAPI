@@ -1,0 +1,12 @@
+# Requirements for My First API
+
+# Core runtime
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+jwt
+
+# Testing / development
+pytest
+httpx
