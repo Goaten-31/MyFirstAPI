@@ -11,7 +11,7 @@ class Project(BaseModel):
     date_made: date
     date_last_edit : date
     activity_status: str
-    comments : Optional[str] = None
+    is_private : bool
 
 
 @app.get('/')
@@ -48,22 +48,30 @@ def gateway_id(Page_name: str):
 
 
 @app.get('/project/{Page_name}/{project.id}')
-def check(project: Project):
+def check(project: Project, limit=5):
     try:
-        if project.id:
+        if project.id < limit and not project.is_private:
             return {project.id : 
                     {"Project Name": project.name, 
                      "Date Created" : project.date_made}}
         else:
-            return {0 : "null"}
+            return {"detail" : "project id out of scope or projects are currently private"}
         
     except Exception as e:
         raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")
 
 
-@app.get('/projects/private')
-def private():
-    return {"data" : "private project"}
+@app.get('/projects/private/{project.id}')
+def private(project: Project):
+    try:
+        if project.is_private:
+            return {project.id :{
+                "Project Name" : project.name,
+                "Date Created" : project.date_made}}
+        else:
+            return {"detail" : "No private projects"}
+    except Exception as e:
+        raise HTTPException(status_code=403, detail=f"Forbidden, HTTP Status Code: 403. Detail : {e}")
 
     
 
