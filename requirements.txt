@@ -1,12 +1,8 @@
-# Requirements for My First API
-
-# Core runtime
 fastapi
 uvicorn[standard]
 sqlalchemy
 pydantic
 PyJWT
 
-# Testing / development
 pytest
 httpx
