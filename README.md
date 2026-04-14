@@ -8,7 +8,7 @@
 ### - Libraries/Frameworks:
 - FastAPI
 - SQL alchemy
-- JWTauth
+- JWT
 
 ## Goals:
 With this API, I plan to take my first step into the world of 
