@@ -75,10 +75,10 @@ def private(project: Project):
 
     
 
-@app.post('/projects/{Page_name}/{project.id}/{project.comments}')
-def post_comment(project : Project):
+@app.post('/projects/Main Page/Add a Project/')
+def create_project(project : Project):
     try:
-        return {project.id : {"comments" : {"user" : project.comments}}}
-    except:
-        raise HTTPException(403, "Error 403: Forbidden")
+        return {project.id : {f"{project.name} successfully created!"}}
+    except Exception as e:
+        raise HTTPException(403, f"Forbidden, HTTP status code: 403. Detail: {e}")
     
