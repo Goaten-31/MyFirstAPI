@@ -13,6 +13,9 @@ class Project(BaseModel):
     activity_status: str
     is_private : bool
 
+class Page(BaseModel):
+    name: str
+    is_active : bool
 
 @app.get('/')
 def index():
@@ -20,7 +23,7 @@ def index():
 
 @app.get('/Main_Page')
 def gateway():
-    return {"Uhm": "This is awkward"}
+    return {"Detail": "This is The Main Page of the App"}
 
 @app.get('/Main_Page/{Page_name}')
 def gateway_id(Page_name: str):
@@ -28,17 +31,11 @@ def gateway_id(Page_name: str):
     try:
         match Page_name:
 
-            case "Artsy":
-                return {Page_name : {"Artsy" : "All of my collages and artworks"} }
+            case "Project Hub":
+                return {Page_name : "All of your projects, private or not, in one concise page"}
             
-            case "Cody":
-                return {Page_name : {"Cody" : "My projects, what probably interests you"}}
-            
-            case "Writey":
-                return {Page_name : {"Writey" : "All my written works"}}
-            
-            case "Contacty":
-                return {Page_name : {"Contacty" : "My contact information"}}
+            case "Public Projects":
+                return {Page_name : "Public projects made by people from your contacts"}
             
             case _:
                 raise HTTPException(status_code=404, detail="Gateway not found, HTTP status code: 404")
@@ -47,15 +44,15 @@ def gateway_id(Page_name: str):
         raise HTTPException(status_code=404, detail= f"Gateway not found, HTTP status code: 404, detail: {e}")
 
 
-@app.get('/project/{Page_name}/{project.id}')
-def check(project: Project, limit=5):
+@app.get('/Main_Page/{page.name}/{project.id}')
+def check(project: Project, page: Page):
     try:
-        if project.id < limit and not project.is_private:
+        if page.name == "Project_Hub" and not project.is_private:
             return {project.id : 
                     {"Project Name": project.name, 
                      "Date Created" : project.date_made}}
         else:
-            return {"detail" : "project id out of scope or projects are currently private"}
+            return {"detail" : "projects are currently private"}
         
     except Exception as e:
         raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")
