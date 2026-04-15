@@ -10,12 +10,10 @@ class Project(BaseModel):
     name: str
     date_made: date
     date_last_edit : date
-    activity_status: str
-    is_private : bool
 
 class Page(BaseModel):
     name: str
-    is_active : bool
+    state : str
 
 @app.get('/')
 def index():
@@ -44,38 +42,36 @@ def current_page(page : Page):
         raise HTTPException(status_code=404, detail= f"Gateway not found, HTTP status code: 404, detail: {e}")
 
 
-@app.get('/Main_Page/{page.name}/{project.id}')
-def check(project: Project, page: Page):
+@app.get('/Main_Page/{page.name}/{page.state}')
+def fetch_projects(project: Project, page: Page):
     try:
-        if page.name == "Project_Hub" and not project.is_private:
-            return {project.id : 
-                    {"Project Name": project.name, 
-                     "Date Created" : project.date_made}}
+        if page.state == "fetch":
+            return {"Project ID" : project.id,
+                    "Project Name": project.name, 
+                     "Date Created" : project.date_made,
+                     "Date of Last Edit" : project.date_last_edit}
         else:
-            return {"detail" : "projects are currently private"}
+            return {"detail" : "No projects"}
         
     except Exception as e:
-        raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")
+        raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")  
 
-
-@app.get('/projects/private/{project.id}')
-def private(project: Project):
+@app.post('/Main_Page/{page.name}/{page.state}')
+def create_project(new_project : Project, page: Page):
     try:
-        if project.is_private:
-            return {project.id :{
-                "Project Name" : project.name,
-                "Date Created" : project.date_made}}
+        if page.state == "create":
+            new_project.date_made, new_project.date_last_edit = datetime.now(), datetime.now()
+            return {f"{new_project.name} successfully created!" : 
+                    {"Project ID" : new_project.id,
+                        "Project Name": new_project.name, 
+                        "Date Created" : new_project.date_made,
+                        "Date of Last Edit" : new_project.date_last_edit}}
         else:
-            return {"detail" : "No private projects"}
-    except Exception as e:
-        raise HTTPException(status_code=403, detail=f"Forbidden, HTTP Status Code: 403. Detail : {e}")
-
+            raise HTTPException(403, f"Forbidden, HTTP status code: 403.")
     
-
-@app.post('/projects/Main Page/Add a Project/')
-def create_project(project : Project):
-    try:
-        return {project.id : {f"{project.name} successfully created!"}}
     except Exception as e:
         raise HTTPException(403, f"Forbidden, HTTP status code: 403. Detail: {e}")
     
+@app.patch('/Main_Page/{page.name}/{page.state}')
+def update_project():
+    pass
