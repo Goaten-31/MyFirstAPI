@@ -25,17 +25,17 @@ def index():
 def gateway():
     return {"Detail": "This is The Main Page of the App"}
 
-@app.get('/Main_Page/{Page_name}')
-def gateway_id(Page_name: str):
+@app.get('/Main_Page/{page.name}')
+def current_page(page : Page):
 
     try:
-        match Page_name:
+        match page.name:
 
             case "Project Hub":
-                return {Page_name : "All of your projects, private or not, in one concise page"}
+                return  { page.name : "All of your projects, private or not, in one concise page"}
             
             case "Public Projects":
-                return {Page_name : "Public projects made by people from your contacts"}
+                return  { page.name : "Public projects made by people from your contacts"}
             
             case _:
                 raise HTTPException(status_code=404, detail="Gateway not found, HTTP status code: 404")
