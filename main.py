@@ -57,15 +57,15 @@ def fetch_projects(project: Project, page: Page):
         raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")  
 
 @app.post('/Main_Page/{page.name}/{page.state}')
-def create_project(new_project : Project, page: Page):
+def create_project(project : Project, page: Page):
     try:
-        if page.state == "create":
-            new_project.date_made, new_project.date_last_edit = datetime.now(), datetime.now()
-            return {f"{new_project.name} successfully created!" : 
-                    {"Project ID" : new_project.id,
-                        "Project Name": new_project.name, 
-                        "Date Created" : new_project.date_made,
-                        "Date of Last Edit" : new_project.date_last_edit}}
+        if page.name == "Home" and page.state == "create":
+            project.date_made, project.date_last_edit = datetime.now(), datetime.now()
+            return {f"{project.name} successfully created!" : 
+                    {"Project ID" : project.id,
+                        "Project Name": project.name, 
+                        "Date Created" : project.date_made,
+                        "Date of Last Edit" : project.date_last_edit}}
         else:
             raise HTTPException(403, f"Forbidden, HTTP status code: 403.")
     
@@ -73,5 +73,17 @@ def create_project(new_project : Project, page: Page):
         raise HTTPException(403, f"Forbidden, HTTP status code: 403. Detail: {e}")
     
 @app.patch('/Main_Page/{page.name}/{page.state}')
-def update_project():
-    pass
+def update_project(project : Project, page: Page):
+    try:
+        if page.name == "Home" and page.state == "update":
+            project.date_made, project.date_last_edit = datetime.now(), datetime.now()
+            return {f"{project.name} successfully created!" : 
+                    {"Project ID" : project.id,
+                        "Project Name": project.name, 
+                        "Date Created" : project.date_made,
+                        "Date of Last Edit" : project.date_last_edit}}
+        else:
+            raise HTTPException(403, f"Forbidden, HTTP status code: 403.")
+    
+    except Exception as e:
+        raise HTTPException(403, f"Forbidden, HTTP status code: 403. Detail: {e}")
