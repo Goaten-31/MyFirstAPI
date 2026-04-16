@@ -36,10 +36,10 @@ def current_page(page : Page):
                 return  { page.name : "Public projects made by people from your contacts"}
             
             case _:
-                raise HTTPException(status_code=404, detail="Gateway not found, HTTP status code: 404")
+                raise HTTPException(status_code=404, detail="Gateway not found. Detail: HTTP status code: 404")
     
     except Exception as e:
-        raise HTTPException(status_code=404, detail= f"Gateway not found, HTTP status code: 404, detail: {e}")
+        raise HTTPException(status_code=404, detail= f"Gateway not found. Detail: {e}")
 
 
 @app.get('/Main_Page/{page.name}/{page.state}')
@@ -51,10 +51,10 @@ def fetch_projects(project: Project, page: Page):
                      "Date Created" : project.date_made,
                      "Date of Last Edit" : project.date_last_edit}
         else:
-            return {"detail" : "No projects"}
+            return HTTPException(status_code=404, detail=f"Gateway not found. Detail : HTTP status code: 404")  
         
     except Exception as e:
-        raise HTTPException(status_code=404, detail=f"Gateway not found, HTTP status code: 404, detail : {e}")  
+        raise HTTPException(status_code=404, detail=f"Gateway not found. Detail : {e}")  
 
 @app.post('/Main_Page/{page.name}/{page.state}')
 def create_project(project : Project, page: Page):
@@ -67,10 +67,10 @@ def create_project(project : Project, page: Page):
                         "Date Created" : project.date_made,
                         "Date of Last Edit" : project.date_last_edit}}
         else:
-            raise HTTPException(403, f"Forbidden, HTTP status code: 403.")
+            raise HTTPException(403, f"Forbidden. Detail: HTTP status code: 403.")
     
     except Exception as e:
-        raise HTTPException(403, f"Forbidden, HTTP status code: 403. Detail: {e}")
+        raise HTTPException(403, f"Forbidden. Detail: {e}")
     
 @app.patch('/Main_Page/{page.name}/{page.state}')
 def update_project(project : Project, page: Page):
@@ -83,7 +83,7 @@ def update_project(project : Project, page: Page):
                         "Date Created" : project.date_made,
                         "Date of Last Edit" : project.date_last_edit}}
         else:
-            raise HTTPException(403, f"Forbidden, HTTP status code: 403.")
+            raise HTTPException(403, f"Forbidden. Detail: HTTP status code: 403")
     
     except Exception as e:
-        raise HTTPException(403, f"Forbidden, HTTP status code: 403. Detail: {e}")
+        raise HTTPException(403, f"Forbidden. Detail: {e}")
