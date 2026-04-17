@@ -5,6 +5,9 @@ from datetime import date, datetime
 
 app = FastAPI()
 
+# I will take a break for 2 weeks
+# I need time to rest and then build the frontend
+
 class Project(BaseModel):
     id: int
     name: str
