@@ -90,3 +90,16 @@ def update_project(project : Project, page: Page):
     
     except Exception as e:
         raise HTTPException(403, f"Forbidden. Detail: {e}")
+
+@app.delete('/Main_page/{page.name}/{page.state}')
+def delete_project(project: Project, page: Page):
+    try:
+        if page.name == "Home" and page.state == "delete":
+            project.date_made, project.date_last_edit = datetime.now(), datetime.now()
+            return {f"{project.name} successfully removed!" : 
+                    {"Project ID" : project.id,
+                        "Project Name": project.name, 
+                        "Date Created" : project.date_made,
+                        "Date of Last Edit" : project.date_last_edit}}
+    except Exception as e:
+        raise HTTPException(403, f"Forbidden. Detail: {e}")
