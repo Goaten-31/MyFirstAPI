@@ -1,10 +1,10 @@
 # My First API
 
-Prototypal API for a personal portfolio website.
+Prototypal API for learning.
 
 ## Overview
 
-This project is a prototype API for my personal portfolio website (see "firstWebPage").
+This project is a prototype API for my personal portfolio website.
 
 ## Tech stack
 
